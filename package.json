@@ -1,6 +1,6 @@
 {
     "name": "@degenfrends/solana-rugchecker",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "description": "Rug check for solana tokens. Checks if the token is a rug or not.",
     "main": "dist/index.js",
     "module": "dist/index.mjs",
@@ -39,8 +39,8 @@
     },
     "dependencies": {
         "@metaplex-foundation/js": "^0.20.1",
-        "@raydium-io/raydium-sdk": "^1.3.1-beta.52",
         "@solana/web3.js": "^1.91.8",
+        "@raydium-io/raydium-sdk": "^1.3.1-beta.52",
         "dotenv": "^16.4.5",
         "web3": "^4.9.0"
     }
