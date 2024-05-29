@@ -1,6 +1,10 @@
 {
     "name": "@degenfrends/solana-rugchecker",
+<<<<<<< HEAD
     "version": "0.0.3",
+=======
+    "version": "0.0.2",
+>>>>>>> 3743752b11e7141ec580b7d49cca8388f7040957
     "description": "Rug check for solana tokens. Checks if the token is a rug or not.",
     "main": "dist/index.js",
     "module": "dist/index.mjs",
