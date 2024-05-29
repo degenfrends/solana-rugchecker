@@ -5,7 +5,7 @@ import RugCheckConfig from './model/rug-check-config';
 export default class SPLRugchecker {
     private metadataChecker: MetadataChecker;
 
-    constructor({ solanaRpcEndpoint }: RugCheckConfig) {
+    public constructor({ solanaRpcEndpoint }: RugCheckConfig) {
         const metadataCheckConfig = { solanaRpcEndpoint: solanaRpcEndpoint };
         this.metadataChecker = new MetadataChecker(metadataCheckConfig);
     }
