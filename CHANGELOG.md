@@ -1,5 +1,11 @@
 # @degenfrends/solana-rugchecker
 
+## 0.0.5
+
+### Patch Changes
+
+-   7b00ff0: Holders and liquidity check added.
+
 ## 0.0.3
 
 ### Patch Changes
