@@ -1,8 +1,8 @@
 import { Connection, PublicKey } from '@solana/web3.js';
 import { Metaplex } from '@metaplex-foundation/js';
 import { config } from 'dotenv';
-import RugCheckResult from '../model/rug-check-result';
-import MetadataCheckConfig from '../model/metadata-check-config';
+import MetadataCheckConfig from '../model/config/metadata-check';
+import MetadataCheckResult from '../model/result/metadata-check';
 config();
 
 export default class MetadataChecker {
@@ -23,29 +23,29 @@ export default class MetadataChecker {
         this.metaplex = metaplex;
     }
 
-    async check(tokenAddress: string): Promise<RugCheckResult> {
+    async check(tokenAddress: string): Promise<MetadataCheckResult> {
         const mintAddress = new PublicKey(tokenAddress);
         const metadataAccount = this.metaplex.nfts().pdas().metadata({ mint: mintAddress });
         const metadataAccountInfo = await this.connection.getAccountInfo(metadataAccount);
+        const tokenMetadata = await this.metaplex.nfts().findByMint({ mintAddress: mintAddress });
 
-        return metadataAccountInfo ? this.createRugCheckResult(metadataAccountInfo) : new RugCheckResult();
+        return metadataAccountInfo ? this.createRugCheckResult(tokenMetadata) : new MetadataCheckResult();
     }
 
-    private createRugCheckResult(tokenMetadata: any): RugCheckResult {
-        const rugCheckResult = new RugCheckResult();
+    private createRugCheckResult(tokenMetadata: any): MetadataCheckResult {
+        const metadataCheckResult = new MetadataCheckResult();
+        metadataCheckResult.name = tokenMetadata.name;
+        metadataCheckResult.description = String(tokenMetadata.json?.description);
+        metadataCheckResult.symbol = tokenMetadata.symbol;
+        metadataCheckResult.imageUrl = String(tokenMetadata.json?.image);
+        metadataCheckResult.telegram = String(tokenMetadata.json?.telegram);
+        metadataCheckResult.website = String(tokenMetadata.json?.website);
+        metadataCheckResult.twitter = String(tokenMetadata.json?.twitter);
+        metadataCheckResult.isMutable = tokenMetadata.isMutable;
+        metadataCheckResult.isMintable = tokenMetadata.mint.mintAuthorityAddress !== null;
+        metadataCheckResult.isFreezable = tokenMetadata.mint.freezeAuthorityAddress !== null;
+        metadataCheckResult.isPumpFun = tokenMetadata.json?.createdOn === 'https://pump.fun';
 
-        rugCheckResult.name = tokenMetadata.name;
-        rugCheckResult.description = String(tokenMetadata.json?.description);
-        rugCheckResult.symbol = tokenMetadata.symbol;
-        rugCheckResult.imageUrl = String(tokenMetadata.json?.image);
-        rugCheckResult.telegram = String(tokenMetadata.json?.telegram);
-        rugCheckResult.website = String(tokenMetadata.json?.website);
-        rugCheckResult.twitter = String(tokenMetadata.json?.twitter);
-        rugCheckResult.isMutable = tokenMetadata.isMutable;
-        rugCheckResult.isMintable = tokenMetadata.mint.mintAuthorityAddress !== null;
-        rugCheckResult.isFreezable = tokenMetadata.mint.freezeAuthorityAddress !== null;
-        rugCheckResult.isPumpFun = tokenMetadata.json?.createdOn === 'https://pump.fun';
-
-        return rugCheckResult;
+        return metadataCheckResult;
     }
 }

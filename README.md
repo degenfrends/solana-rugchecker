@@ -6,10 +6,10 @@
 ![Discord](https://img.shields.io/discord/1242753898964582440)
 ![X (formerly Twitter) URL](https://img.shields.io/twitter/url?url=https%3A%2F%2Fx.com%2Fkryptobrah&label=Twitter%2FX)
 
-## Currently the rug check is only based on the token's metadata! Don't base any decision on the results of this check! I will add top holders and liquidity pool analysis in the next days/week. I am not a JavaScript developer, so I am pretty sure I didn't really got the concept of asynchronous programming. If someone has too much time, [join the discord](https://discord.gg/4cEuF4Dzw4) and teach me what I did wrong, or fork it and do it better!
+## I am not a JavaScript developer, so I am pretty sure I didn't really got the concept of asynchronous programming. And I am not sure if I did everything correct with the npm package. If someone has too much time, [join the discord](https://discord.gg/4cEuF4Dzw4) and teach me what I did wrong, or fork it and do it better!
 
-SPLRugchecker is a TypeScript class that checks if a Solana token is a potential rug pull. It uses the `MetadataChecker` class to check the token's
-metadata and provides methods to calculate a rug score and determine if the token is a potential rug pull.
+SPLRugchecker is a TypeScript class that checks if a Solana token is a potential rug pull. It analyzes the blockchain to check the token's metadata,
+top holders and liquidity, and provides methods to calculate a rug score and determine if the token is a potential rug pull.
 
 ## Installation
 
@@ -21,14 +21,16 @@ npm install "@degenfrends/solana-rugchecker"
 
 ## Configuration
 
-To create an instance of `SPLRugchecker`, you need to provide a `RugCheckConfig` object with the `solanaRpcEndpoint` property. But if you want to use
-environment variables for the configuration, that's possible too.
+To create an instance of `SPLRugchecker`, you need to provide a `RugCheckConfig` object with the `solanaRpcEndpoint` and `poolFilePath` property. But
+if you want to use environment variables for the configuration, that's possible too. You need to download the pool file from
+https://api.raydium.io/v2/sdk/liquidity/mainnet.json and set the path of the file in the `poolFilePath` property.
 
 ### 1. Configuration without environment variables
 
 ```typescript
 const rugCheckConfig = {
     solanaRpcEndpoint: 'https://api.devnet.solana.com'
+    poolFilePath: './mainnet.json'
 };
 const rugChecker = new SPLRugchecker(rugCheckConfig);
 ```
@@ -36,7 +38,8 @@ const rugChecker = new SPLRugchecker(rugCheckConfig);
 ### 2. Configuration with environment variables
 
 If you want to configure the rug checker with environment variables, you need to define a `SOLANA_RPC_ENDPOINT` variable and pass an empty object `{}`
-in the constructor.
+in the constructor. BE AWARE THAT YOU NEED AN RPC ENDPOINT THAT ALLOWS THE `getTokenLargestAccounts` CALL! HELIUS.DEV IS WORKING WITH THE FREE TIER
+FOR EXAMPLE!
 
 ```bash
 SOLANA_RPC_ENDPOINT="https://api.devnet.solana.com"
@@ -71,10 +74,11 @@ yourself, if the token is a rug or not based on the `RugCheckResult` object or t
 ## Full example
 
 ```typescript
-import SPLRugchecker from '@degenfrends/solana-rugchecker';
+const SPLRugchecker = require('@degenfrends/solana-rugchecker').default;
 
 const rugCheckConfig = {
     solanaRpcEndpoint: 'https://api.devnet.solana.com'
+    poolFilePath: './mainnet.json'
 };
 const rugChecker = new SPLRugchecker(rugCheckConfig);
 const result = await rugChecker.check('tokenAddress');

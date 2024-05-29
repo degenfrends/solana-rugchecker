@@ -1,4 +1,4 @@
-export default class RugCheckResult {
+export default class MetadataCheckResult {
     address: string;
     name: string;
     symbol: string;

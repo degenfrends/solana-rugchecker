@@ -6,7 +6,7 @@ dist/
 docs/
 /.pnp
 .pnp.js
-
+all_pools.json
 # testing
 coverage/
 

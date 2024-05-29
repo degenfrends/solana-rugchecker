@@ -1,7 +1,7 @@
 import { Connection, PublicKey } from '@solana/web3.js';
 import { Metaplex } from '@metaplex-foundation/js';
 import MetadataChecker from '../../src/checker/metadata-checker';
-import RugCheckResult from '../../src/model/rug-check-result';
+import RugCheckResult from '../../src/model/result/rug-check';
 
 //jest.mock('@solana/web3.js');
 //jest.mock('@metaplex-foundation/js');
