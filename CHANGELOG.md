@@ -1,5 +1,11 @@
 # @degenfrends/solana-rugchecker
 
+## 0.0.7
+
+### Patch Changes
+
+-   c976e01: ## @degenfrends/solana-rugchecker: Added keywords
+
 ## 0.0.5
 
 ### Patch Changes
