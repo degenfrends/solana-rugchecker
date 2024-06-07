@@ -11,6 +11,8 @@
         "strict": true,
         "skipLibCheck": true,
         "types": ["jest"],
+        "typeRoots": ["./node_modules/@types", "./src/type"],
+
         "moduleResolution": "Node16",
         "module": "Node16"
     },

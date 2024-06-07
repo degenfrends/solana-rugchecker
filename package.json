@@ -39,10 +39,12 @@
     },
     "dependencies": {
         "@metaplex-foundation/js": "^0.20.1",
-        "@solana/web3.js": "^1.91.8",
         "@raydium-io/raydium-sdk": "^1.3.1-beta.52",
+        "@solana/web3.js": "^1.91.8",
         "dotenv": "^16.4.5",
-        "web3": "^4.9.0"
+        "web3": "^4.9.0",
+        "whois": "^2.14.2",
+        "whois-json": "^2.0.4"
     },
     "keywords": [
         "solana",

@@ -1,5 +1,5 @@
 import { Connection, PublicKey, ParsedAccountData } from '@solana/web3.js';
-import * as fs from 'fs';
+import { promises as fs } from 'fs';
 import { LIQUIDITY_STATE_LAYOUT_V4 } from '@raydium-io/raydium-sdk';
 import LiquidityCheckConfig from '../model/config/liquidity-check';
 import LiquidityCheckResult from '../model/result/liquidity-check';
@@ -46,14 +46,18 @@ export default class LiquidityChecker {
     }
 
     async getLiquidityPool(tokenAddress: string) {
-        const data = fs.readFileSync(this.poolFilePath, 'utf8');
-        const allPools = JSON.parse(data);
-        let poolId = '';
-        allPools.forEach(function (pool: { id: string; baseMint: string; quoteMint: string }) {
-            if (pool.baseMint === tokenAddress || pool.quoteMint === tokenAddress) {
-                poolId = pool.id;
-            }
-        });
-        return poolId;
+        try {
+            const data = await fs.readFile(this.poolFilePath, 'utf8');
+            const allPools = JSON.parse(data);
+
+            const pool = allPools.find(
+                (pool: { baseMint: string; quoteMint: string }) => pool.baseMint === tokenAddress || pool.quoteMint === tokenAddress
+            );
+
+            return pool ? pool.id : '';
+        } catch (error) {
+            console.error('Error reading or parsing pool file:', error);
+            return '';
+        }
     }
 }

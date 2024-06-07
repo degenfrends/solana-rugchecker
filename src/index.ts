@@ -3,7 +3,7 @@ import RugCheckResult from './model/result/rug-check';
 import RugCheckConfig from './model/config/rug-check';
 import HoldersChecker from './checker/holders-checker';
 import LiquidityChecker from './checker/liquidity-checker';
-
+import WebsiteChecker from './checker/website-checker';
 export default class SPLRugchecker {
     private holdersChecker: HoldersChecker;
     private liquidityChecker: LiquidityChecker;
@@ -76,3 +76,4 @@ export default class SPLRugchecker {
         return false;
     }
 }
+export { WebsiteChecker };

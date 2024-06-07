@@ -6,7 +6,7 @@
 ![Discord](https://img.shields.io/discord/1242753898964582440)
 ![X (formerly Twitter) URL](https://img.shields.io/twitter/url?url=https%3A%2F%2Fx.com%2Fkryptobrah&label=Twitter%2FX)
 
-## I am not a JavaScript developer, so I am pretty sure I didn't really got the concept of asynchronous programming. And I am not sure if I did everything correct with the npm package. If someone has too much time, [join the discord](https://discord.gg/4cEuF4Dzw4) and teach me what I did wrong, or fork it and do it better!
+## I am not a JavaScript developer, so I am pretty sure I didn't really got the concept of asynchronous programming. And I am not sure if I did everything correct with the npm package. If someone has too much time, [join the discord](https://discord.gg/HUVAbet2Dp) and teach me what I did wrong, or fork it and do it better!
 
 SPLRugchecker is a TypeScript class that checks if a Solana token is a potential rug pull. It analyzes the blockchain to check the token's metadata,
 top holders and liquidity, and provides methods to calculate a rug score and determine if the token is a potential rug pull.
