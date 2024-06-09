@@ -1,5 +1,11 @@
 # @degenfrends/solana-rugchecker
 
+## 0.0.9
+
+### Patch Changes
+
+-   2bf72d0: ## @degenfrends/solana-rugchecker: Depndabot fix
+
 ## 0.0.8
 
 ### Patch Changes
