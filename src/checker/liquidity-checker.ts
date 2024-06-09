@@ -25,7 +25,12 @@ export default class LiquidityChecker {
     }
 
     async check(tokenAddress: string): Promise<LiquidityCheckResult> {
-        const poolAddress = await this.getRaydiumPoolAddress(tokenAddress);
+        let poolAddress;
+        if (!this.poolFilePath) {
+            poolAddress = await this.getRaydiumPoolAddress(tokenAddress);
+        } else {
+            poolAddress = await this.getLiquidityPool(tokenAddress);
+        }
         const liquidityCheckResult = new LiquidityCheckResult();
         if (!poolAddress) {
             //throw new Error('No pool found');
