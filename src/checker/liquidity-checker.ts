@@ -25,8 +25,11 @@ export default class LiquidityChecker {
 
     async check(tokenAddress: string): Promise<LiquidityCheckResult> {
         const poolAddress = await this.getLiquidityPool(tokenAddress);
+        const liquidityCheckResult = new LiquidityCheckResult();
         if (!poolAddress) {
-            throw new Error('No pool found');
+            //throw new Error('No pool found');
+            liquidityCheckResult.liquidityPoolAddress = '';
+            return liquidityCheckResult;
         }
         const acc = await this.connection.getMultipleAccountsInfo([new PublicKey(poolAddress)]);
         const parsed = acc.map((v) => (v ? LIQUIDITY_STATE_LAYOUT_V4.decode(v.data) : null));
@@ -39,9 +42,9 @@ export default class LiquidityChecker {
         const maxLpSupply = Math.max(actualSupply, lpReserve - 1);
         const burnAmt = lpReserve - actualSupply;
         const burnPct = (burnAmt / lpReserve) * 100;
-        const liquidityCheckResult = new LiquidityCheckResult();
         liquidityCheckResult.isLiquidityLocked = burnPct > 95;
         liquidityCheckResult.burnt = burnPct;
+        liquidityCheckResult.liquidityPoolAddress = poolAddress;
         return liquidityCheckResult;
     }
 
