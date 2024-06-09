@@ -1,5 +1,11 @@
 # @degenfrends/solana-rugchecker
 
+## 0.0.13
+
+### Patch Changes
+
+-   bfb3eb6: ## @degenfrends/solana-rugchecker: Initial version
+
 ## 0.0.12
 
 ### Patch Changes
