@@ -17,6 +17,9 @@ importers:
       '@solana/web3.js':
         specifier: ^1.92.3
         version: 1.92.3(bufferutil@4.0.8)(utf-8-validate@5.0.10)
+      axios:
+        specifier: ^1.7.2
+        version: 1.7.2(debug@4.3.4)
       dotenv:
         specifier: ^16.4.5
         version: 16.4.5
