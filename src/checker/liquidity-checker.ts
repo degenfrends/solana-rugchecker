@@ -3,6 +3,7 @@ import { promises as fs } from 'fs';
 import { LIQUIDITY_STATE_LAYOUT_V4 } from '@raydium-io/raydium-sdk';
 import LiquidityCheckConfig from '../model/config/liquidity-check';
 import LiquidityCheckResult from '../model/result/liquidity-check';
+import axios from 'axios';
 
 export default class LiquidityChecker {
     private connection: Connection;
@@ -24,7 +25,7 @@ export default class LiquidityChecker {
     }
 
     async check(tokenAddress: string): Promise<LiquidityCheckResult> {
-        const poolAddress = await this.getLiquidityPool(tokenAddress);
+        const poolAddress = await this.getRaydiumPoolAddress(tokenAddress);
         const liquidityCheckResult = new LiquidityCheckResult();
         if (!poolAddress) {
             //throw new Error('No pool found');
@@ -61,6 +62,18 @@ export default class LiquidityChecker {
         } catch (error) {
             console.error('Error reading or parsing pool file:', error);
             return '';
+        }
+    }
+
+    async getRaydiumPoolAddress(mintAddress: string) {
+        try {
+            const url = 'https://api.geckoterminal.com/api/v2/networks/solana/tokens/' + mintAddress;
+
+            const response = await axios.get(url);
+            console.log(response);
+            return response.data.data.relationships.top_pools.data[0].id.replace('solana_', '');
+        } catch (error) {
+            console.error('Error fetching pool address:', error);
         }
     }
 }

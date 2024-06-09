@@ -9,7 +9,7 @@ async function main() {
     const result = await rugChecker.check('97oWtQfbZMdDbn1jdNciDHm2vnPBR8VT3Ns7vSS7i9cm');
     const score = rugChecker.rugScore(result);
     const isRug = rugChecker.isRug(result);
-    console.log(isRug);
+    console.log(result);
 }
 async function website() {
     const website = 'patriotsmonth.xyz';
