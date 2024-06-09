@@ -49,6 +49,9 @@ export default class SPLRugchecker {
         } else if (rugCheckResult.holders.topHoldersPercentage >= 20) {
             rugScore += 50;
         }
+        if (rugCheckResult.liquidity.isLiquidityLocked === false) {
+            rugScore += 80;
+        }
         for (const holder of rugCheckResult.holders.topHolders) {
             if (holder.percentage >= 10) {
                 rugScore += 80;
