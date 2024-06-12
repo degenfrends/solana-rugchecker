@@ -32,7 +32,6 @@ export default class HoldersChecker {
         for (const holder of largestHoldersResponse.value) {
             const tokenAccountsResponse = await this.connection.getParsedAccountInfo(holder.address);
             const walletAddress = (tokenAccountsResponse.value?.data as ParsedAccountData)?.parsed?.info?.owner;
-            await sleep(300);
             if (holder.uiAmount !== null && walletAddress !== null && walletAddress !== '5Q544fKrFoe6tsEbD7S8EmxGTJYAKtTVhAW5Q5pge4j1') {
                 whaleSupply += holder.uiAmount;
                 let topHolder = new HolderCheckResult();
@@ -53,6 +52,7 @@ export default class HoldersChecker {
         holdersCheckResult.topHolders = topHolders;
         holdersCheckResult.topHoldersPercentage = topHoldersPercentage;
         holdersCheckResult.raydiumPercentage = raydiumPercentage;
+
         return holdersCheckResult;
     }
 }

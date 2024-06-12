@@ -19,9 +19,11 @@ export default class SPLRugchecker {
     }
 
     async check(tokenAddress: string): Promise<RugCheckResult> {
-        const metadataCheckResult = await this.metadataChecker.check(tokenAddress);
-        const holdersCheckResult = await this.holdersChecker.check(tokenAddress);
-        const liquidityCheckResult = await this.liquidityChecker.check(tokenAddress);
+        const [metadataCheckResult, holdersCheckResult, liquidityCheckResult] = await Promise.all([
+            this.metadataChecker.check(tokenAddress),
+            this.holdersChecker.check(tokenAddress),
+            this.liquidityChecker.check(tokenAddress)
+        ]);
 
         const rugCheckResult = new RugCheckResult();
         rugCheckResult.metadata = metadataCheckResult;

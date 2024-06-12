@@ -9,15 +9,19 @@ export default class LiquidityChecker {
     private connection: Connection;
 
     private poolFilePath: string;
-
-    constructor({ solanaRpcEndpoint, poolFilePath }: LiquidityCheckConfig, connection?: Connection) {
+    private poolAddress: string;
+    constructor({ solanaRpcEndpoint, poolFilePath, poolAddress }: LiquidityCheckConfig, connection?: Connection) {
         if (!solanaRpcEndpoint) {
             solanaRpcEndpoint = String(process.env.SOLANA_RPC_ENDPOINT);
         }
         if (!poolFilePath) {
             poolFilePath = String(process.env.POOL_FILE_PATH);
+        } else {
+            this.poolFilePath = poolFilePath;
         }
-        this.poolFilePath = poolFilePath;
+        if (poolAddress) {
+            this.poolAddress = poolAddress;
+        }
         if (!connection) {
             connection = new Connection(solanaRpcEndpoint);
         }
@@ -26,10 +30,14 @@ export default class LiquidityChecker {
 
     async check(tokenAddress: string): Promise<LiquidityCheckResult> {
         let poolAddress;
-        if (!this.poolFilePath) {
-            poolAddress = await this.getRaydiumPoolAddress(tokenAddress);
+        if (this.poolAddress) {
+            poolAddress = this.poolAddress;
         } else {
-            poolAddress = await this.getLiquidityPool(tokenAddress);
+            if (!this.poolFilePath) {
+                poolAddress = await this.getRaydiumPoolAddress(tokenAddress);
+            } else {
+                poolAddress = await this.getLiquidityPool(tokenAddress);
+            }
         }
         const liquidityCheckResult = new LiquidityCheckResult();
         if (!poolAddress) {
@@ -51,6 +59,7 @@ export default class LiquidityChecker {
         liquidityCheckResult.isLiquidityLocked = burnPct > 95;
         liquidityCheckResult.burnt = burnPct;
         liquidityCheckResult.liquidityPoolAddress = poolAddress;
+
         return liquidityCheckResult;
     }
 
@@ -73,9 +82,7 @@ export default class LiquidityChecker {
     async getRaydiumPoolAddress(mintAddress: string) {
         try {
             const url = 'https://api.geckoterminal.com/api/v2/networks/solana/tokens/' + mintAddress;
-
             const response = await axios.get(url);
-            console.log(response);
             return response.data.data.relationships.top_pools.data[0].id.replace('solana_', '');
         } catch (error) {
             console.error('Error fetching pool address:', error);
