@@ -4,17 +4,20 @@ import RugCheckConfig from './model/config/rug-check';
 import HoldersChecker from './checker/holders-checker';
 import LiquidityChecker from './checker/liquidity-checker';
 import WebsiteChecker from './checker/website-checker';
+import MetadataCheckConfig from './model/config/metadata-check';
+import HoldersCheckConfig from './model/config/holders-check';
+import LiquidityCheckConfig from './model/config/liquidity-check';
 export default class SPLRugchecker {
     private holdersChecker: HoldersChecker;
     private liquidityChecker: LiquidityChecker;
     private metadataChecker: MetadataChecker;
 
-    public constructor({ solanaRpcEndpoint, poolFilePath }: RugCheckConfig) {
-        const metadataCheckConfig = { solanaRpcEndpoint: solanaRpcEndpoint };
+    public constructor({ solanaRpcEndpoint, poolFilePath, poolAddress, heliusApiKey }: RugCheckConfig) {
+        const metadataCheckConfig = { solanaRpcEndpoint: solanaRpcEndpoint, heliusApiKey: heliusApiKey };
         this.metadataChecker = new MetadataChecker(metadataCheckConfig);
         const holdersCheckConfig = { solanaRpcEndpoint: solanaRpcEndpoint };
         this.holdersChecker = new HoldersChecker(holdersCheckConfig);
-        const liquidityCheckConfig = { solanaRpcEndpoint: solanaRpcEndpoint, poolFilePath };
+        const liquidityCheckConfig = { solanaRpcEndpoint: solanaRpcEndpoint, poolFilePath: poolFilePath, poolAddress: poolAddress };
         this.liquidityChecker = new LiquidityChecker(liquidityCheckConfig);
     }
 
@@ -81,4 +84,13 @@ export default class SPLRugchecker {
         return false;
     }
 }
+
 export { WebsiteChecker };
+export { MetadataChecker };
+export { HoldersChecker };
+export { LiquidityChecker };
+
+export { RugCheckConfig };
+export { MetadataCheckConfig };
+export { LiquidityCheckConfig };
+export { HoldersCheckConfig };

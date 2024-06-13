@@ -9,7 +9,7 @@ docs/
 all_pools.json
 # testing
 coverage/
-
+./index.js
 # misc
 .DS_Store
 .env

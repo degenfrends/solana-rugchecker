@@ -6,9 +6,8 @@
 ![NPM Version](https://img.shields.io/npm/v/@degenfrends/solana-rugchecker)
 ![NPM Downloads](https://img.shields.io/npm/dw/@degenfrends/solana-rugchecker)
 ![GitHub Repo stars](https://img.shields.io/github/stars/degenfrends/solana-rugchecker)
-![X (formerly Twitter) URL](https://img.shields.io/twitter/url?url=https%3A%2F%2Fx.com%2Fkryptobrah&label=Twitter%2FX)
 
-## This project is under development. Results might fail or give false results. Please evaluate your current version yourself, until this notice disappears. [Join the discord if you are looking for fellow degen developers!](https://discord.gg/HUVAbet2Dp)
+## This project is under development. Results might fail or give false results. Please evaluate your current version yourself, until this notice disappears. But things are getting more stable since v0.0.14! [Join the discord if you are looking for fellow degen developers!](https://discord.gg/HUVAbet2Dp)
 
 SPLRugchecker is a TypeScript class that checks if a Solana token is a potential rug pull. It analyzes the blockchain to check the token's metadata,
 top holders and liquidity, and provides methods to calculate a rug score and determine if the token is a potential rug pull.
@@ -81,17 +80,38 @@ yourself, if the token is a rug or not based on the `RugCheckResult` object or t
 const SPLRugchecker = require('@degenfrends/solana-rugchecker').default;
 
 const rugCheckConfig = {
-    solanaRpcEndpoint: 'https://api.devnet.solana.com'
+    solanaRpcEndpoint: 'https://api.devnet.solana.com',
     // If you set this option, you need to provide a downloaded version of this file: https://api.raydium.io/v2/sdk/liquidity/mainnet.json, otherwise the API from geckoterminal.com is used.
     poolFilePath: './mainnet.json',
     // If you set this option, you need to provide the pool address for the token yourself. This might be useful when you build a sniper that is listening on raydium pool creation.
-    poolAddress: '97oWtQfbZMdDbn1jdNciDHm2vnPBR8VT3Ns7vSS7i9cm'
+    poolAddress: '97oWtQfbZMdDbn1jdNciDHm2vnPBR8VT3Ns7vSS7i9cm',
+    // If you set this option, the metadata checker will try to get the Website and Social Media via Helius if the Metaplex request doesn't return any urls for Twitter, Telegram or the Website.
+    heliusApiKey: 'your-helius-key'
 };
 const rugChecker = new SPLRugchecker(rugCheckConfig);
 const result = await rugChecker.check('tokenAddress');
 // you can access the detailed results of each check. Log the result to see all information that is returned.
 const score = rugChecker.rugScore(result);
 const isRug = rugChecker.isRug(result);
+```
+
+You can use the checkers indivudually like this, in this example I use the website checker, which is not included in the actual rugchecking logic. But
+the whois information can give you additional insights about a website and its owner:
+
+```typescript
+const MetadataChecker = require('@degenfrends/solana-rugchecker').MetadataChecker;
+const WebsiteChecker = require('@degenfrends/solana-rugchecker').WebsiteChecker;
+
+// get the token metadata first
+const metadataChecker = new MetadataChecker({
+    solanaRpcEndpoint: 'https://api.devnet.solana.com',
+    heliusApiKey: 'your-api-key'
+});
+const metadataCheckResult = await metadataChecker.check('1234tokenaddress');
+
+// and then get the whois information for further processing
+const websiteChecker = new WebsiteChecker();
+const websiteCheckResult = await websiteChecker.check(result.metadata.website);
 ```
 
 If you have any questions or suggestions, [join the discord!](https://discord.gg/HUVAbet2Dp)

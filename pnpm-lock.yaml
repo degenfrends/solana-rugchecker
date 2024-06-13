@@ -23,6 +23,12 @@ importers:
       dotenv:
         specifier: ^16.4.5
         version: 16.4.5
+      helius-sdk:
+        specifier: ^1.3.3
+        version: 1.3.3(arweave@1.15.1)(bufferutil@4.0.8)(fastestsmallesttextencoderdecoder@1.0.22)(utf-8-validate@5.0.10)
+      validator:
+        specifier: ^13.12.0
+        version: 13.12.0
       web3:
         specifier: ^4.9.0
         version: 4.9.0(bufferutil@4.0.8)(typescript@5.4.5)(utf-8-validate@5.0.10)(zod@3.23.8)
@@ -537,6 +543,11 @@ packages:
 
   '@irys/sdk@0.0.2':
     resolution: {integrity: sha512-un/e/CmTpgT042gDwCN3AtISrR9OYGMY6V+442pFmSWKrwrsDoIXZ8VlLiYKnrtTm+yquGhjfYy0LDqGWq41pA==}
+    engines: {node: '>=16.10.0'}
+    hasBin: true
+
+  '@irys/sdk@0.0.3':
+    resolution: {integrity: sha512-kq6m6t4imZFqhz9udLycJY70nve6mEWN+bseVp2v08g6TwUEjT55E9TPVHSrzwt1tdIVs/qT/jHsL24VFuKSdQ==}
     engines: {node: '>=16.10.0'}
     hasBin: true
 
@@ -1988,6 +1999,9 @@ packages:
   header-case@1.0.1:
     resolution: {integrity: sha512-i0q9mkOeSuhXw6bGgiQCCBgY/jlZuV/7dZXyZ9c6LcBrqwvT8eT719E9uxE5LiZftdl+z81Ugbg/VvXV4OJOeQ==}
 
+  helius-sdk@1.3.3:
+    resolution: {integrity: sha512-dOC+BIOai2hvIGS9RkEW8nRU/s5wJvDd+kO3CAJ2775dmQiyPfqKAffU/gsKfTbG4ZWSaPjCfw+hJd4YivQSxA==}
+
   hi-base32@0.5.1:
     resolution: {integrity: sha512-EmBBpvdYh/4XxsnUybsPag6VikPYnN30td+vQk+GI3qpahVEG9+gTkG0aXVxTjBqQ5T6ijbWIu77O+C5WFWsnA==}
 
@@ -3395,6 +3409,10 @@ packages:
   validate-npm-package-license@3.0.4:
     resolution: {integrity: sha512-DpKm2Ui/xN7/HQKCtpZxoRWBhZ9Z0kqtygG8XCgNQ8ZlDnxuQmWhj566j8fN4Cu3/JmbhsDo7fcAJq4s9h27Ew==}
 
+  validator@13.12.0:
+    resolution: {integrity: sha512-c1Q0mCiPlgdTVVVIJIrBuxNicYE+t/7oKeI9MWLj3fh/uq2Pxh/3eeWbVZ4OcGW1TUf53At0njHw5SMdA3tmMg==}
+    engines: {node: '>= 0.10'}
+
   vlq@2.0.4:
     resolution: {integrity: sha512-aodjPa2wPQFkra1G8CzJBTHXhgk3EVSwxSWXNPr1fgdFLUb8kvLV1iEb6rFgasIsjP82HWI6dsb5Io26DDnasA==}
 
@@ -4338,6 +4356,40 @@ snapshots:
       - debug
 
   '@irys/sdk@0.0.2(arweave@1.15.1)(bufferutil@4.0.8)(debug@4.3.5)(utf-8-validate@5.0.10)':
+    dependencies:
+      '@ethersproject/bignumber': 5.7.0
+      '@ethersproject/contracts': 5.7.0
+      '@ethersproject/providers': 5.7.2(bufferutil@4.0.8)(utf-8-validate@5.0.10)
+      '@ethersproject/wallet': 5.7.0
+      '@irys/query': 0.0.1(debug@4.3.5)
+      '@near-js/crypto': 0.0.3
+      '@near-js/keystores-browser': 0.0.3
+      '@near-js/providers': 0.0.4
+      '@near-js/transactions': 0.1.1
+      '@solana/web3.js': 1.92.3(bufferutil@4.0.8)(utf-8-validate@5.0.10)
+      '@supercharge/promise-pool': 3.2.0
+      algosdk: 1.24.1
+      aptos: 1.8.5(debug@4.3.5)
+      arbundles: 0.10.1(arweave@1.15.1)(bufferutil@4.0.8)(debug@4.3.5)(utf-8-validate@5.0.10)
+      async-retry: 1.3.3
+      axios: 1.7.2(debug@4.3.5)
+      base64url: 3.0.1
+      bignumber.js: 9.1.2
+      bs58: 5.0.0
+      commander: 8.3.0
+      csv: 5.5.3
+      inquirer: 8.2.6
+      js-sha256: 0.9.0
+      mime-types: 2.1.35
+      near-seed-phrase: 0.2.0
+    transitivePeerDependencies:
+      - arweave
+      - bufferutil
+      - debug
+      - encoding
+      - utf-8-validate
+
+  '@irys/sdk@0.0.3(arweave@1.15.1)(bufferutil@4.0.8)(utf-8-validate@5.0.10)':
     dependencies:
       '@ethersproject/bignumber': 5.7.0
       '@ethersproject/contracts': 5.7.0
@@ -6359,6 +6411,20 @@ snapshots:
       no-case: 2.3.2
       upper-case: 1.1.3
 
+  helius-sdk@1.3.3(arweave@1.15.1)(bufferutil@4.0.8)(fastestsmallesttextencoderdecoder@1.0.22)(utf-8-validate@5.0.10):
+    dependencies:
+      '@irys/sdk': 0.0.3(arweave@1.15.1)(bufferutil@4.0.8)(utf-8-validate@5.0.10)
+      '@metaplex-foundation/mpl-token-metadata': 2.13.0(bufferutil@4.0.8)(fastestsmallesttextencoderdecoder@1.0.22)(utf-8-validate@5.0.10)
+      axios: 1.7.2(debug@4.3.5)
+    transitivePeerDependencies:
+      - arweave
+      - bufferutil
+      - debug
+      - encoding
+      - fastestsmallesttextencoderdecoder
+      - supports-color
+      - utf-8-validate
+
   hi-base32@0.5.1: {}
 
   hmac-drbg@1.0.1:
@@ -7970,6 +8036,8 @@ snapshots:
     dependencies:
       spdx-correct: 3.2.0
       spdx-expression-parse: 3.0.1
+
+  validator@13.12.0: {}
 
   vlq@2.0.4: {}
 
