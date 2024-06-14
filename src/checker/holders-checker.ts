@@ -52,7 +52,7 @@ export default class HoldersChecker {
         holdersCheckResult.topHolders = topHolders;
         holdersCheckResult.topHoldersPercentage = topHoldersPercentage;
         holdersCheckResult.raydiumPercentage = raydiumPercentage;
-
+        holdersCheckResult.address = tokenAddress;
         return holdersCheckResult;
     }
 }

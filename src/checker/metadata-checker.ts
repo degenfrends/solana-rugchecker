@@ -23,7 +23,7 @@ export default class MetadataChecker {
         }
         this.connection = connection;
         if (!metaplex) {
-            metaplex = Metaplex.make(connection);
+            metaplex = Metaplex.make(this.connection);
         }
         this.metaplex = metaplex;
         if (heliusApiKey) {
@@ -45,6 +45,7 @@ export default class MetadataChecker {
             ) {
                 metadataCheckResult = await this.getHeliusMetadata(tokenAddress, metadataCheckResult);
             }
+            metadataCheckResult.address = tokenAddress;
             return metadataCheckResult;
         }
 

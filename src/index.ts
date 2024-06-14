@@ -7,10 +7,13 @@ import WebsiteChecker from './checker/website-checker';
 import MetadataCheckConfig from './model/config/metadata-check';
 import HoldersCheckConfig from './model/config/holders-check';
 import LiquidityCheckConfig from './model/config/liquidity-check';
+import MarketdataChecker from './checker/marketdata-checker';
+import MarketdataCheckConfig from './model/config/marketdata-check';
 export default class SPLRugchecker {
     private holdersChecker: HoldersChecker;
     private liquidityChecker: LiquidityChecker;
     private metadataChecker: MetadataChecker;
+    private marketdataChecker: MarketdataChecker;
 
     public constructor({ solanaRpcEndpoint, poolFilePath, poolAddress, heliusApiKey }: RugCheckConfig) {
         const metadataCheckConfig = { solanaRpcEndpoint: solanaRpcEndpoint, heliusApiKey: heliusApiKey };
@@ -19,20 +22,23 @@ export default class SPLRugchecker {
         this.holdersChecker = new HoldersChecker(holdersCheckConfig);
         const liquidityCheckConfig = { solanaRpcEndpoint: solanaRpcEndpoint, poolFilePath: poolFilePath, poolAddress: poolAddress };
         this.liquidityChecker = new LiquidityChecker(liquidityCheckConfig);
+        const marketdataCheckConfig = {};
+        this.marketdataChecker = new MarketdataChecker(marketdataCheckConfig);
     }
 
     async check(tokenAddress: string): Promise<RugCheckResult> {
-        const [metadataCheckResult, holdersCheckResult, liquidityCheckResult] = await Promise.all([
+        const [metadataCheckResult, holdersCheckResult, liquidityCheckResult, marketdataCheckResult] = await Promise.all([
             this.metadataChecker.check(tokenAddress),
             this.holdersChecker.check(tokenAddress),
-            this.liquidityChecker.check(tokenAddress)
+            this.liquidityChecker.check(tokenAddress),
+            this.marketdataChecker.check(tokenAddress)
         ]);
 
         const rugCheckResult = new RugCheckResult();
         rugCheckResult.metadata = metadataCheckResult;
         rugCheckResult.holders = holdersCheckResult;
         rugCheckResult.liquidity = liquidityCheckResult;
-
+        rugCheckResult.marketdata = marketdataCheckResult;
         return rugCheckResult;
     }
 
@@ -89,8 +95,10 @@ export { WebsiteChecker };
 export { MetadataChecker };
 export { HoldersChecker };
 export { LiquidityChecker };
+export { MarketdataChecker };
 
 export { RugCheckConfig };
 export { MetadataCheckConfig };
 export { LiquidityCheckConfig };
 export { HoldersCheckConfig };
+export { MarketdataCheckConfig };

@@ -31,7 +31,9 @@ from https://api.raydium.io/v2/sdk/liquidity/mainnet.json and set the path of th
 ```typescript
 const rugCheckConfig = {
     solanaRpcEndpoint: 'https://api.devnet.solana.com'
-    poolFilePath: './mainnet.json'
+    poolFilePath: './mainnet.json' //optional
+    poolAddress: '12345pooladdress' //optional, can't be set with environment variable, since it most likely changes on every check
+    heliusApiKey: 'your-api-key' //optional
 };
 const rugChecker = new SPLRugchecker(rugCheckConfig);
 ```

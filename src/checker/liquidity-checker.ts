@@ -59,7 +59,7 @@ export default class LiquidityChecker {
         liquidityCheckResult.isLiquidityLocked = burnPct > 95;
         liquidityCheckResult.burnt = burnPct;
         liquidityCheckResult.liquidityPoolAddress = poolAddress;
-
+        liquidityCheckResult.address = tokenAddress;
         return liquidityCheckResult;
     }
 
